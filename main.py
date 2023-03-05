@@ -1,4 +1,5 @@
 import argparse
+from datetime import datetime
 import sqlalchemy
 from sqlalchemy.sql import select, update, insert, delete
 from model import Group, Student, Teacher, Discipline, Grade
@@ -16,6 +17,7 @@ parser.add_argument("-tid", "--teacher_id", type=int, default=None)
 parser.add_argument("-did", "--discipline_id", type=int, default=None)
 parser.add_argument("-sid", "--student_id", type=int, default=None)
 parser.add_argument("-g", "--grade", type=int, default=None)
+parser.add_argument("-d", "--created_at", type=str, default=None)
 
 args = parser.parse_args()
 
@@ -34,7 +36,7 @@ def do_action(args):
         elif model == "Discipline":
             values = f"discipline='{args.name}', teacher_id={args.teacher_id}"
         elif model == "Grade":
-            values = f"grade={args.grade}, student_id={args.student_id}, discipline_id={args.discipline_id}"
+            values = f"grade={args.grade}, created_at=datetime.strptime('{args.created_at}', '%Y-%M-%d').date(), student_id={args.student_id}, discipline_id={args.discipline_id}"
         query = eval(f"insert({args.model}).values({values})")
 
     elif args.action == "update":
