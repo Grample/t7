@@ -4,6 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 import configparser
 import pathlib
 
+
 file_config = pathlib.Path(__file__).parent.parent.joinpath('config.ini')
 config = configparser.ConfigParser()
 config.read(file_config)
@@ -20,3 +21,4 @@ engine = create_engine(url, echo=False, pool_size=5)
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
+conn = engine.connect()
